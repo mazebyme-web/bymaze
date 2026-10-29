@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MAZE — Graphic design &amp; branding</title>
+<meta name="description" content="MAZE — independent graphic design and branding practice. עיצוב שמקדם עסקים.">
+<meta name="theme-color" content="#2B2F30">
+<link rel="stylesheet" href="https://use.typekit.net/yet5abx.css">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/main.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#archive">Skip to the work</a>
+
+<header class="bar">
+  <a href="#entry" aria-label="MAZE — back to top"><img src="assets/logo/maze-offwhite.svg" alt="MAZE" width="120" height="25"></a>
+  <nav aria-label="Main">
+    <a href="#paths">Paths</a>
+    <a href="#archive">Work</a>
+    <a href="#fix">Fix this</a>
+    <a class="exit" href="#contact">Exit the maze</a>
+  </nav>
+</header>
+
+<main>
+<!-- 1 · ENTRY -->
+<section id="entry" class="screen" aria-labelledby="h-entry">
+  <h1 id="h-entry" class="big"><span>GOOD</span> <span>DESIGN</span> <span>OPENS</span> <span>DOORS.</span></h1>
+  <p class="he" lang="he" dir="rtl">עיצוב שמקדם עסקים. בואו נגלה איך.</p>
+  <div class="row">
+    <a class="btn solid" href="#paths">ENTER THE MAZE</a>
+    <a class="btn" href="#archive">SKIP THE INTRO</a>
+  </div>
+  <p class="hint" aria-hidden="true">Scroll ↓</p>
+</section>
+
+<!-- 2 · PATHS -->
+<section id="paths" class="screen" aria-labelledby="h-paths">
+  <h2 id="h-paths" class="mid">CHOOSE YOUR PATH</h2>
+  <ul class="paths">
+    <li><a href="#archive"><b>01 SHOW ME</b><span class="he" lang="he" dir="rtl">תראו לי מה MAZE יודעת לעשות.</span></a></li>
+    <li><a href="#fix"><b>02 FIX THIS</b><span class="he" lang="he" dir="rtl">בואו נראה מה עיצוב יכול לשנות.</span></a></li>
+    <li><a href="#contact"><b>03 LET’S TALK</b><span class="he" lang="he" dir="rtl">יש לכם פרויקט? דברו איתי.</span></a></li>
+  </ul>
+  <a class="btn solid" href="#archive" data-tour="start">FOLLOW THE PATH</a>
+</section>
+
+<!-- 3 · ARCHIVE -->
+<section id="archive" class="screen" aria-labelledby="h-archive">
+  <h2 id="h-archive" class="mid">THE PROJECT ARCHIVE</h2>
+  <p class="note">Placeholders — real projects will replace these cards.</p>
+  <ul class="cards">
+    <li><button type="button" data-case="1">
+      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
+      <b>Project name</b><em>Branding · Placeholder</em>
+      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
+    </button></li>
+    <li><button type="button" data-case="2">
+      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
+      <b>Project name</b><em>Digital · Placeholder</em>
+      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
+    </button></li>
+    <li><button type="button" data-case="3">
+      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
+      <b>Project name</b><em>Landing page · Placeholder</em>
+      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
+    </button></li>
+  </ul>
+</section>
+
+<!-- 4 · CASE FILE (overlay) -->
+<div id="case" class="case" role="dialog" aria-modal="true" aria-labelledby="h-case" hidden>
+  <div class="case-in">
+    <button type="button" class="btn close" data-close>BACK TO ARCHIVE</button>
+    <h2 id="h-case" class="mid">THE CASE FILE</h2>
+    <p class="note">Placeholder case study — content pending real project material.</p>
+    <article lang="he" dir="rtl" class="he-block">
+      <h3>התדריך</h3><p>כאן יופיע תיאור העסק, הדרישות והאתגר העיצובי.</p>
+      <h3>הזהות</h3><p>לוגו, שפה חזותית, טיפוגרפיה וצבעים.</p>
+      <h3>המערכת</h3><p>יישומי מותג, נכסים דיגיטליים, אתר וחוויית מובייל.</p>
+      <h3>החשיבה</h3><p>ההיגיון מאחורי ההחלטות העיצוביות.</p>
+      <h3>תורכם</h3><p>יש לכם פרויקט? <a href="#contact" data-close>דברו איתי</a>.</p>
+    </article>
+  </div>
+</div>
+
+<!-- 5 · FIX THIS -->
+<section id="fix" class="screen" aria-labelledby="h-fix">
+  <h2 id="h-fix" class="mid">FIX THIS</h2>
+  <p class="note">A conceptual exercise — not a real client result.</p>
+  <p class="he" lang="he" dir="rtl">אותו מסר, שני עיצובים. איזה מהם ברור יותר?</p>
+  <div class="duel" role="group" aria-label="Choose a design direction">
+    <button type="button" data-pick="a" class="dA"><span>SALE!!! BEST PRICE!!! CALL NOW</span><small>Cheap · Fast · Quality · Free consultation</small></button>
+    <button type="button" data-pick="b" class="dB"><span>Your brand, clearly.</span><small>One message. One next step.</small></button>
+  </div>
+  <p id="fix-out" class="he reveal" lang="he" dir="rtl" role="status" hidden></p>
+  <a class="btn" href="#contact">SKIP</a>
+</section>
+
+<!-- 6 · EXIT -->
+<section id="contact" class="screen" aria-labelledby="h-contact">
+  <h2 id="h-contact" class="big">YOUR BUSINESS IS NEXT.</h2>
+  <p class="he" lang="he" dir="rtl">מה העסק שלכם צריך?</p>
+  <ul class="chips" lang="he" dir="rtl">
+    <li><a data-wa="מיתוג וזהות חזותית" href="#contact">מיתוג וזהות חזותית</a></li>
+    <li><a data-wa="עיצוב דיגיטלי" href="#contact">עיצוב דיגיטלי</a></li>
+    <li><a data-wa="עמודי נחיתה" href="#contact">עמודי נחיתה</a></li>
+    <li><a data-wa="פרויקטים גרפיים נקודתיים" href="#contact">פרויקטים גרפיים נקודתיים</a></li>
+    <li><a data-wa="ייעוץ או התלבטות לגבי הצורך העיצובי" href="#contact">ייעוץ או התלבטות לגבי הצורך העיצובי</a></li>
+  </ul>
+  <p class="row">
+    <a href="mailto:mazebyme@gmail.com">mazebyme@gmail.com</a>
+    <a href="https://instagram.com/bymazedesign" rel="noopener">Instagram</a>
+    <a href="#archive">Back to the work</a>
+  </p>
+</section>
+</main>
+</body>
+</html>
