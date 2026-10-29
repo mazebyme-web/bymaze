@@ -8,6 +8,8 @@
 <meta name="theme-color" content="#2B2F30">
 <link rel="stylesheet" href="https://use.typekit.net/yet5abx.css">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/projects.js" defer></script>
+<script src="js/archive.js" defer></script>
 <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -56,15 +58,20 @@
 
 <!-- 3 · ARCHIVE -->
 <section id="archive" class="screen" aria-labelledby="h-archive">
-  <h2 id="h-archive" class="mid">THE PROJECT ARCHIVE</h2>
-  <ul class="cards">
-    <li><button type="button" data-case="1">
-      <span class="thumb" aria-hidden="true">IMAGE PENDING</span>
-      <b>Law firm — branding &amp; digital design</b><em>Visual identity · Digital · Case in preparation</em>
-      <span class="he" lang="he" dir="rtl">מיתוג ועיצוב דיגיטלי למשרד עורכת דין. פרטי הפרויקט יתווספו.</span>
-    </button></li>
-    <li class="slot"><span class="thumb" aria-hidden="true">+</span><b>Next project</b><em>Not yet added</em></li>
-  </ul>
+  <div class="arch-head">
+    <h2 id="h-archive" class="mid">THE PROJECT ARCHIVE</h2>
+    <p class="tech" id="arch-count" role="status"></p>
+  </div>
+  <div class="filters" role="group" aria-label="Filter projects">
+    <button type="button" data-f="all" aria-pressed="true">ALL FILES</button>
+    <button type="button" data-f="identity" aria-pressed="false">IDENTITY</button>
+    <button type="button" data-f="digital" aria-pressed="false">DIGITAL</button>
+    <button type="button" data-f="print" aria-pressed="false">PRINT</button>
+    <button type="button" data-f="experimental" aria-pressed="false">EXPERIMENTAL</button>
+    <button type="button" class="rearr" id="rearrange" aria-pressed="false">REARRANGE</button>
+  </div>
+  <ul id="grid" class="grid"></ul>
+  <p id="arch-empty" class="note" hidden>No files in this category yet. <button type="button" class="lnk" data-f="all">Back to ALL FILES</button></p>
 </section>
 
 <!-- 4 · CASE FILE (overlay) -->
@@ -72,14 +79,7 @@
   <div class="case-in">
     <button type="button" class="btn close" data-close>BACK TO ARCHIVE</button>
     <h2 id="h-case" class="mid">THE CASE FILE</h2>
-    <p class="note">Case in preparation. Every section below is a placeholder until real material is added.</p>
-    <article lang="he" dir="rtl" class="he-block">
-      <h3>התדריך</h3><p>יתווסף: תיאור העסק, הדרישות והאתגר העיצובי.</p>
-      <h3>הזהות</h3><p>יתווסף: לוגו, שפה חזותית, טיפוגרפיה וצבעים.</p><div class="ph" aria-hidden="true">תמונה: חומרי הזהות</div>
-      <h3>המערכת</h3><p>יתווסף: יישומי מותג, כרטיס ביקור דיגיטלי, אתר ומובייל.</p><div class="ph" aria-hidden="true">תמונה: מוקאפים</div>
-      <h3>החשיבה</h3><p>יתווסף: ההיגיון מאחורי ההחלטות העיצוביות, במילים שלך.</p>
-      <h3>תורכם</h3><p>יש לכם פרויקט? <a href="#contact" data-close>דברו איתי</a>.</p>
-    </article>
+    <div id="case-body"></div>
   </div>
 </div>
 

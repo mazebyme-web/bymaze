@@ -62,26 +62,6 @@
   $('#tour-back').addEventListener('click', function () { if (tourIdx > 0) { tourIdx--; go(route[tourIdx]); drawTour(); } });
   $('#tour-exit').addEventListener('click', function () { tour(false); });
 
-  // ---- Case file overlay
-  var overlay = $('#case'), opener = null;
-  $$('[data-case]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      opener = b; overlay.hidden = false; document.body.style.overflow = 'hidden'; $('[data-close]', overlay).focus();
-    });
-  });
-  function closeCase() { overlay.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); }
-  $$('[data-close]', overlay).forEach(function (b) { b.addEventListener('click', closeCase); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !overlay.hidden) closeCase();
-    if (e.key === 'Tab' && !overlay.hidden) { // keep focus inside the overlay
-      var f = $$('a,button', overlay).filter(function (x) { return !x.disabled; });
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
   // ---- FIX THIS: three switches change the same ad; Hebrew explanation follows the last change
   var ad = $('#ad'), out = $('#fix-out');
   var why = {
