@@ -23,16 +23,21 @@
   </nav>
 </header>
 
+<div id="tour" class="tour" hidden><span id="tour-step"></span><button type="button" class="btn" id="tour-back">BACK</button><button type="button" class="btn solid" id="tour-next">NEXT</button><button type="button" class="btn" id="tour-exit">LEAVE TOUR</button></div>
 <main>
 <!-- 1 · ENTRY -->
 <section id="entry" class="screen" aria-labelledby="h-entry">
+  <p class="kicker">MAZE — graphic design &amp; branding studio</p>
+  <div class="reveal-wrap" id="reveal">
+  <p class="under" aria-hidden="true">BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT BRANDING IDENTITY LOGO TYPE WEB PRINT </p>
   <h1 id="h-entry" class="big"><span>GOOD</span> <span>DESIGN</span> <span>OPENS</span> <span>DOORS.</span></h1>
+  </div>
   <p class="he" lang="he" dir="rtl">עיצוב שמקדם עסקים. בואו נגלה איך.</p>
   <div class="row">
     <a class="btn solid" href="#paths">ENTER THE MAZE</a>
     <a class="btn" href="#archive">SKIP THE INTRO</a>
   </div>
-  <p class="hint" aria-hidden="true">Scroll ↓</p>
+  <p class="hint">Move your pointer or touch the headline to reveal what MAZE does. Scroll to continue ↓</p>
 </section>
 
 <!-- 2 · PATHS -->
@@ -43,29 +48,22 @@
     <li><a href="#fix"><b>02 FIX THIS</b><span class="he" lang="he" dir="rtl">בואו נראה מה עיצוב יכול לשנות.</span></a></li>
     <li><a href="#contact"><b>03 LET’S TALK</b><span class="he" lang="he" dir="rtl">יש לכם פרויקט? דברו איתי.</span></a></li>
   </ul>
-  <a class="btn solid" href="#archive" data-tour="start">FOLLOW THE PATH</a>
+  <div class="row">
+    <button type="button" class="btn solid" data-tour="start">FOLLOW THE PATH</button>
+    <a class="btn" href="#archive">EXPLORE FREELY</a>
+  </div>
 </section>
 
 <!-- 3 · ARCHIVE -->
 <section id="archive" class="screen" aria-labelledby="h-archive">
   <h2 id="h-archive" class="mid">THE PROJECT ARCHIVE</h2>
-  <p class="note">Placeholders — real projects will replace these cards.</p>
   <ul class="cards">
     <li><button type="button" data-case="1">
-      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
-      <b>Project name</b><em>Branding · Placeholder</em>
-      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
+      <span class="thumb" aria-hidden="true">IMAGE PENDING</span>
+      <b>Law firm — branding &amp; digital design</b><em>Visual identity · Digital · Case in preparation</em>
+      <span class="he" lang="he" dir="rtl">מיתוג ועיצוב דיגיטלי למשרד עורכת דין. פרטי הפרויקט יתווספו.</span>
     </button></li>
-    <li><button type="button" data-case="2">
-      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
-      <b>Project name</b><em>Digital · Placeholder</em>
-      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
-    </button></li>
-    <li><button type="button" data-case="3">
-      <span class="thumb" aria-hidden="true">PLACEHOLDER</span>
-      <b>Project name</b><em>Landing page · Placeholder</em>
-      <span class="he" lang="he" dir="rtl">תיאור קצר של הפרויקט יופיע כאן.</span>
-    </button></li>
+    <li class="slot"><span class="thumb" aria-hidden="true">+</span><b>Next project</b><em>Not yet added</em></li>
   </ul>
 </section>
 
@@ -74,12 +72,12 @@
   <div class="case-in">
     <button type="button" class="btn close" data-close>BACK TO ARCHIVE</button>
     <h2 id="h-case" class="mid">THE CASE FILE</h2>
-    <p class="note">Placeholder case study — content pending real project material.</p>
+    <p class="note">Case in preparation. Every section below is a placeholder until real material is added.</p>
     <article lang="he" dir="rtl" class="he-block">
-      <h3>התדריך</h3><p>כאן יופיע תיאור העסק, הדרישות והאתגר העיצובי.</p>
-      <h3>הזהות</h3><p>לוגו, שפה חזותית, טיפוגרפיה וצבעים.</p>
-      <h3>המערכת</h3><p>יישומי מותג, נכסים דיגיטליים, אתר וחוויית מובייל.</p>
-      <h3>החשיבה</h3><p>ההיגיון מאחורי ההחלטות העיצוביות.</p>
+      <h3>התדריך</h3><p>יתווסף: תיאור העסק, הדרישות והאתגר העיצובי.</p>
+      <h3>הזהות</h3><p>יתווסף: לוגו, שפה חזותית, טיפוגרפיה וצבעים.</p><div class="ph" aria-hidden="true">תמונה: חומרי הזהות</div>
+      <h3>המערכת</h3><p>יתווסף: יישומי מותג, כרטיס ביקור דיגיטלי, אתר ומובייל.</p><div class="ph" aria-hidden="true">תמונה: מוקאפים</div>
+      <h3>החשיבה</h3><p>יתווסף: ההיגיון מאחורי ההחלטות העיצוביות, במילים שלך.</p>
       <h3>תורכם</h3><p>יש לכם פרויקט? <a href="#contact" data-close>דברו איתי</a>.</p>
     </article>
   </div>
@@ -88,14 +86,22 @@
 <!-- 5 · FIX THIS -->
 <section id="fix" class="screen" aria-labelledby="h-fix">
   <h2 id="h-fix" class="mid">FIX THIS</h2>
-  <p class="note">A conceptual exercise — not a real client result.</p>
-  <p class="he" lang="he" dir="rtl">אותו מסר, שני עיצובים. איזה מהם ברור יותר?</p>
-  <div class="duel" role="group" aria-label="Choose a design direction">
-    <button type="button" data-pick="a" class="dA"><span>SALE!!! BEST PRICE!!! CALL NOW</span><small>Cheap · Fast · Quality · Free consultation</small></button>
-    <button type="button" data-pick="b" class="dB"><span>Your brand, clearly.</span><small>One message. One next step.</small></button>
+  <p class="note">Conceptual demonstration. The business is invented and no result is implied.</p>
+  <p class="he" lang="he" dir="rtl">הפעילו כל שינוי ותראו מה הוא עושה לאותה מודעה.</p>
+  <div class="fix-grid">
+    <div id="ad" class="ad" lang="he" dir="rtl" role="img" aria-label="מודעה לדוגמה של בית קפה בדוי, מתעדכנת לפי השינויים שנבחרו">
+      <div class="ad-a" aria-hidden="true"><i>מבצע!!!</i><i>הכי זול בעיר</i><i>קפה · עוגות · כריכים</i><i>חדש! חדש!</i><i>התקשרו עכשיו</i></div>
+      <div class="ad-b" aria-hidden="true"><b>קפה טוב, קרוב אליכם.</b><span>קפה נח, בית קפה שכונתי</span><u>הזמינו שולחן</u></div>
+    </div>
+    <div class="ctrl">
+      <label><input type="checkbox" data-fix="msg"> מסר אחד במקום חמישה</label>
+      <label><input type="checkbox" data-fix="hier"> היררכיה ברורה</label>
+      <label><input type="checkbox" data-fix="id"> זהות חזותית עקבית</label>
+      <button type="button" class="btn" id="fix-reset">RESET</button>
+      <p id="fix-out" class="he reveal" lang="he" dir="rtl" role="status">סמנו שינוי כדי לראות מה הוא משנה.</p>
+    </div>
   </div>
-  <p id="fix-out" class="he reveal" lang="he" dir="rtl" role="status" hidden></p>
-  <a class="btn" href="#contact">SKIP</a>
+  <a class="btn" href="#contact">SKIP TO CONTACT</a>
 </section>
 
 <!-- 6 · EXIT -->
@@ -109,6 +115,7 @@
     <li><a data-wa="פרויקטים גרפיים נקודתיים" href="#contact">פרויקטים גרפיים נקודתיים</a></li>
     <li><a data-wa="ייעוץ או התלבטות לגבי הצורך העיצובי" href="#contact">ייעוץ או התלבטות לגבי הצורך העיצובי</a></li>
   </ul>
+  <p id="wa-note" class="note" role="status">Choose a service to open a message you can review before sending.</p>
   <p class="row">
     <a href="mailto:mazebyme@gmail.com">mazebyme@gmail.com</a>
     <a href="https://instagram.com/bymazedesign" rel="noopener">Instagram</a>
