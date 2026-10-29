@@ -1,0 +1,103 @@
+---
+import '../styles/global.css';
+import { contact, projects, services } from '../content.js';
+---
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MAZE | סטודיו לעיצוב גרפי ומיתוג</title>
+  <meta name="description" content="MAZE: עיצוב גרפי, מיתוג וזהות חזותית לעסקים שרוצים להיראות אחרת. אפשר גם לשחק בטיפוגרפיה באתר." />
+  <meta property="og:title" content="MAZE | Make Your Own Way" />
+  <meta property="og:description" content="עיצוב גרפי, מיתוג וזהות חזותית." />
+  <link rel="icon" href="/logo-orange.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://use.typekit.net/yet5abx.css" />
+</head>
+<body>
+  <a class="skip" href="#main">דילוג לתוכן הראשי</a>
+  <header class="top">
+    <a href="#top" aria-label="MAZE, לראש העמוד"><img src="/logo-orange.svg" alt="MAZE" width="120" height="25" /></a>
+    <nav aria-label="ניווט ראשי">
+      <a href="#playground">המגרש</a><a href="#work">עבודות</a><a href="#mindset">מיינדסט</a><a href="#services">שירותים</a><a href="#contact">קשר</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero grid" id="top">
+      <h1 lang="en" dir="ltr"><span>Make Your</span><span>Own</span><button id="way" type="button" aria-label="Way: מילה שאפשר לגרור. חצים מזיזים, Home מחזיר">Way</button></h1>
+      <p class="lede">כאן שוברים כללים בכוונה. אפשר להתחיל בגרירת המילה, או לרדת למגרש.</p>
+      <a class="btn" href="#playground">למגרש</a>
+    </section>
+
+    <section class="play" id="playground" aria-labelledby="h-play">
+      <h2 id="h-play">המגרש</h2>
+      <p>כותבים מילה והיא מתפרקת לאותיות על גריד. גוררים, מגדילים, מסובבים ושוברים.</p>
+      <div class="studio">
+        <canvas id="cv" tabindex="0" role="img" aria-label="קנבס עריכה. חצים מזיזים את האות הנבחרת, פלוס ומינוס משנים גודל, R מסובב."></canvas>
+        <div class="tools">
+          <label for="word">המילה שלך</label>
+          <input id="word" type="text" maxlength="14" value="MAZE" autocomplete="off" />
+          <div class="row" role="group" aria-label="בחירת אות">
+            <button data-act="prev">אות קודמת</button><button data-act="next">אות הבאה</button>
+          </div>
+          <div class="row" role="group" aria-label="עריכת האות הנבחרת">
+            <button data-act="grow">הגדלה</button><button data-act="shrink">הקטנה</button><button data-act="rot">סיבוב</button><button data-act="weight">עובי</button><button data-act="color">צבע אות</button>
+          </div>
+          <div class="row" role="group" aria-label="סטי צבעים">
+            <button class="sw" data-pal="0" style="--a:#f2ede3;--b:#b55d2f" aria-label="שמנת וטרקוטה"></button>
+            <button class="sw" data-pal="1" style="--a:#2b2f30;--b:#baad99" aria-label="פחם וחול"></button>
+            <button class="sw" data-pal="2" style="--a:#b55d2f;--b:#f2ede3" aria-label="טרקוטה ושמנת"></button>
+            <button class="sw" data-pal="3" style="--a:#baad99;--b:#544b42" aria-label="חול וחום"></button>
+            <button class="sw" data-pal="4" style="--a:#203248;--b:#f2ede3" aria-label="כחול עמוק ושמנת"></button>
+          </div>
+          <div class="row">
+            <button class="btn" data-act="remix">שבירת הגריד</button><button data-act="reset">איפוס</button><button data-act="save">שמירה כתמונה</button>
+          </div>
+          <p id="st" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work" aria-labelledby="h-work">
+      <h2 id="h-work">עבודות נבחרות</h2>
+      <p>הפרויקטים האמיתיים יתווספו כאן. כל פרויקט נפתח מעל העמוד.</p>
+      <ul class="tiles">
+        {projects.map((p) => (<li class={`t ${p.shape}`}><button class={p.color} data-open={p.id}>{p.title}</button></li>))}
+      </ul>
+    </section>
+    <dialog id="dlg" aria-label="פרטי פרויקט">
+      <form method="dialog"><button class="x" aria-label="סגירה">סגירה</button></form>
+      {projects.map((p) => (<article data-id={p.id} hidden><div class={`ph ${p.color}`}>תמונת פרויקט: מקום שמור להחלפה</div><h3>{p.title}</h3><p><!-- להחליף בתיאור אמיתי -->כאן יופיע תיאור הפרויקט, התהליך והתוצאה.</p></article>))}
+    </dialog>
+
+    <section class="mindset" id="mindset" aria-labelledby="h-mind">
+      <picture>
+        <source media="(min-width: 800px)" srcset="/img/portrait-wide.webp" />
+        <img src="/img/portrait-square.webp" alt="דיוקן של מזל טדסה, מעצבת MAZE" width="900" height="864" loading="lazy" />
+      </picture>
+      <div>
+        <h2 id="h-mind">המיינדסט</h2>
+        <!-- טקסט זמני לעריכה -->
+        <p>עיצוב שבולט מתחיל בשאלה על מה שנראה מובן מאליו. קודם מבינים את הכללים של התחום, ואז בוחרים איזה מהם לשבור.</p>
+      </div>
+    </section>
+
+    <section class="services" id="services" aria-labelledby="h-serv">
+      <h2 id="h-serv">שירותים</h2>
+      <ul>{services.map(([t, d]) => (<li><h3>{t}</h3><p>{d}</p></li>))}</ul>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="h-contact">
+      <h2 id="h-contact">יש רעיון? בואו נתחיל.</h2>
+      <ul class="links">
+        <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+        <li><a href={contact.instagram} target="_blank" rel="noopener">אינסטגרם: bymazedesign</a></li>
+        {contact.whatsapp ? <li><a href={`https://wa.me/${contact.whatsapp}`}>וואטסאפ</a></li> : <li>וואטסאפ: בקרוב</li>}
+      </ul>
+      <img src="/logo-offwhite.svg" alt="" width="200" height="42" />
+    </section>
+  </main>
+  <footer><p>© MAZE. הצהרת נגישות ומדיניות פרטיות: בהכנה, חובה להשלים לפני עלייה לאוויר.</p></footer>
+  <script>import '../scripts/main.js';</script>
+</body>
+</html>
