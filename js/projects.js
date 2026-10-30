@@ -1,10 +1,10 @@
 /* MAZE archive data. To add a project: copy one object, change the fields, drop images in assets/projects/<id>/.
    type: A featured case · B compact deliverable · C wide digital set · D typographic/experimental
-   images: [{src, alt}] — leave [] until real files exist (a labelled placeholder is shown).
+   images: [{src, alt}] - leave [] until real files exist (a labelled placeholder is shown).
    client: only fill in when the client approved disclosure. */
 window.MAZE_PROJECTS = [
   { id: 'law-firm-identity', n: '01', type: 'A', cats: ['identity', 'digital'],
-    title: 'Law firm — identity & digital', client: null, label: 'Branding · Website · Digital business card',
+    title: 'Law firm - identity & digital', client: null, label: 'Branding · Website · Digital business card',
     desc: 'מיתוג ועיצוב דיגיטלי למשרד עורכת דין.',
     deliverables: [], images: [], pending: true,
     needs: ['Logo and identity boards', 'Typography and colour specification', 'Brand applications (mockups)', 'Digital business card and website screenshots', 'Client approval to show the name']

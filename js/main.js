@@ -13,7 +13,7 @@
     var r = rev.getBoundingClientRect(), t = e.touches ? e.touches[0] : e;
     rev.style.setProperty('--x', (t.clientX - r.left) + 'px');
     rev.style.setProperty('--y', (t.clientY - r.top) + 'px');
-    rev.style.setProperty('--r', '110px');
+    rev.style.setProperty('--r', (innerWidth < 600 ? 150 : 230) + 'px');
   }
   if (!reduce) {
     ['pointermove', 'touchstart', 'touchmove'].forEach(function (ev) { rev.addEventListener(ev, setPos, { passive: true }); });
@@ -62,33 +62,40 @@
   $('#tour-back').addEventListener('click', function () { if (tourIdx > 0) { tourIdx--; go(route[tourIdx]); drawTour(); } });
   $('#tour-exit').addEventListener('click', function () { tour(false); });
 
-  // ---- FIX THIS: three switches change the same ad; Hebrew explanation follows the last change
-  var ad = $('#ad'), out = $('#fix-out');
+  // ---- FIX THIS: before/after slider + annotation pins + alignment grid
+  var box = $('#cmpbox'), cmp = $('#cmp'), out = $('#fix-out');
+  function setP() { box.style.setProperty('--p', cmp.value + '%'); }
+  cmp.addEventListener('input', setP); setP();
+  $('#gl').addEventListener('change', function (e) { box.classList.toggle('show-grid', e.target.checked); });
   var why = {
-    msg: ['מסר אחד', 'חמש הודעות מתחרות זו בזו. כשיש מסר אחד, הקורא מבין תוך שנייה מה העסק מציע ומה לעשות.'],
-    hier: ['היררכיה', 'כשהכול גדול, שום דבר לא בולט. כותרת אחת דומיננטית והשאר קטן יותר נותנים לעין נקודת התחלה.'],
-    id: ['זהות עקבית', 'צבע וטיפוגרפיה שחוזרים על עצמם הופכים מודעה סתמית למשהו שאפשר לזהות ולזכור.']
+    1: 'היררכיה: השם גדול פי ארבעה מכל פרט אחר, ולכן הוא הדבר הראשון שנקרא. לפני, חמש שורות בגדלים דומים התחרו זו בזו.',
+    2: 'יישור ומרווח: כל הפרטים נשענים על אותו קו וברווח קבוע (הפעילו את הרשת כדי לראות). לפני, שורות במרכז, בצד ובמרחקים לא קבועים.',
+    3: 'ניגודיות: טקסט בהיר על רקע כהה ביחס 11.6:1. לפני, חול על חום-אפור ביחס 3.87:1, שקשה לקרוא.'
   };
-  $$('[data-fix]').forEach(function (c) {
-    c.addEventListener('change', function () {
-      var k = c.dataset.fix; ad.classList.toggle('f-' + k, c.checked);
-      out.textContent = c.checked ? why[k][0] + ': ' + why[k][1] : 'ביטלתם את ' + why[k][0] + '. שימו לב מה חזר להיות קשה לקריאה.';
-      if ($$('[data-fix]:checked').length === 3) out.textContent += ' זהו תרגיל מושגי על עסק בדוי, לא תוצאה של לקוח אמיתי.';
+  $$('[data-pin]').forEach(function (p) {
+    p.addEventListener('click', function () {
+      $$('[data-pin]').forEach(function (x) { x.setAttribute('aria-pressed', x === p ? 'true' : 'false'); });
+      out.textContent = why[p.dataset.pin];
+      if (+cmp.value > 20) { cmp.value = 10; setP(); }
     });
   });
-  $('#fix-reset').addEventListener('click', function () {
-    $$('[data-fix]').forEach(function (c) { c.checked = false; });
-    ad.className = 'ad'; out.textContent = 'סמנו שינוי כדי לראות מה הוא משנה.';
-  });
 
-  // ---- Contact: WhatsApp when a real number is set, otherwise an email draft (never a dead link)
+  // ---- Contact: service picks fill the form; submit opens WhatsApp (if number set) or an email draft
   var ready = WHATSAPP_NUMBER !== '972500000000';
-  var note = $('#wa-note');
-  $$('[data-wa]').forEach(function (a) {
-    var text = 'שלום, הגעתי מהאתר של MAZE. אני מתעניין/ת ב: ' + a.dataset.wa;
-    a.href = ready ? 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text)
-                   : 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('פנייה מהאתר: ' + a.dataset.wa) + '&body=' + encodeURIComponent(text);
-    if (ready) { a.target = '_blank'; a.rel = 'noopener'; }
-    a.addEventListener('click', function () { note.textContent = ready ? 'Opening WhatsApp with your message.' : 'Opening an email draft (WhatsApp number not set yet).'; });
+  var form = $('#cform'), note = $('#wa-note'), svcs = $$('[data-svc]');
+  if (ready) { var fw = $('#f-wa'); fw.hidden = false; fw.href = 'https://wa.me/' + WHATSAPP_NUMBER; fw.target = '_blank'; fw.rel = 'noopener'; }
+  svcs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      svcs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      form.msg.value = 'שלום, אני מתעניין/ת ב: ' + b.dataset.svc;
+      form.msg.focus({ preventScroll: true });
+    });
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.name.value.trim() || !form.contact.value.trim() || !form.msg.value.trim()) { note.textContent = 'Please fill in all three fields.'; return; }
+    var text = form.msg.value.trim() + '\n\n' + form.name.value.trim() + '\n' + form.contact.value.trim();
+    if (ready) { window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text), '_blank', 'noopener'); note.textContent = 'Opening WhatsApp with your message.'; }
+    else { location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('פנייה מהאתר') + '&body=' + encodeURIComponent(text); note.textContent = 'Opening an email draft.'; }
   });
 })();

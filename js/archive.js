@@ -64,7 +64,7 @@
   // ---- project detail overlay
   function open(p, trigger) {
     opener = trigger; body.textContent = '';
-    $('#h-case').textContent = p.n + ' — ' + p.title;
+    $('#h-case').textContent = p.n + ' - ' + p.title;
     body.appendChild(el('p', 'tech', p.label.toUpperCase() + ' · ' + p.cats.join(' · ').toUpperCase()));
     var art = he('div', 'he-block'); art.appendChild(he('p', 'he-lead', p.desc));
     if (p.type === 'A') {
@@ -77,7 +77,7 @@
     else body.appendChild(el('div', 'ph', 'IMAGES PENDING'));
     if (p.deliverables.length) { var d = el('ul', 'dl'); p.deliverables.forEach(function (x) { d.appendChild(el('li', null, x)); }); body.appendChild(el('p', 'tech', 'DELIVERABLES')); body.appendChild(d); }
     if (p.needs.length) { var n = el('ul', 'dl'); p.needs.forEach(function (x) { n.appendChild(el('li', null, x)); }); body.appendChild(el('p', 'tech', 'ASSETS STILL NEEDED')); body.appendChild(n); }
-    var cta = el('a', 'btn solid', 'YOUR TURN — LET’S TALK'); cta.href = '#contact'; cta.dataset.close = '1'; body.appendChild(cta);
+    var cta = el('a', 'btn solid', 'YOUR TURN - LET’S TALK'); cta.href = '#contact'; cta.dataset.close = '1'; body.appendChild(cta);
     overlay.hidden = false; document.body.style.overflow = 'hidden'; overlay.scrollTop = 0; $('.close', overlay).focus();
   }
   function close() { overlay.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); }
