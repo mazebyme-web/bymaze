@@ -47,6 +47,14 @@
   }
   P.forEach(function (p) { grid.appendChild(tile(p)); });
 
+  // closing tile: an invitation to start a project (fills the grid, leads to the form)
+  var cta = el('li', 'tile tD cta'); cta.dataset.cats = 'branding digital print';
+  var ca = el('a', 'cta-box'); ca.href = '#cform';
+  ca.appendChild(el('span', 'tech', 'YOUR PROJECT'));
+  ca.appendChild(el('strong', 'cta-ttl', 'Let’s make yours.'));
+  ca.appendChild(he('span', 'cta-he', 'הפרויקט הבא יכול להיות שלכם ←'));
+  cta.appendChild(ca); grid.appendChild(cta);
+
   // ---- filters
   var count = $('#arch-count'), empty = $('#arch-empty');
   function filter(f) {
@@ -54,7 +62,7 @@
     $$('.tile', grid).forEach(function (t) {
       var show = f === 'all' || t.dataset.cats.split(' ').indexOf(f) > -1;
       t.hidden = !show;
-      if (show) { if (!t.classList.contains('soon')) n++; t.classList.remove('in'); void t.offsetWidth; t.classList.add('in'); }
+      if (show) { if (!t.classList.contains('soon') && !t.classList.contains('cta')) n++; t.classList.remove('in'); void t.offsetWidth; t.classList.add('in'); }
     });
     $$('.filters [data-f]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === f ? 'true' : 'false'); });
     empty.hidden = $$('.tile:not([hidden])', grid).length > 0;

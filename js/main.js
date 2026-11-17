@@ -44,8 +44,9 @@
 
   // ---------- Instagram strip ----------
   var IG = window.MAZE_INSTAGRAM || { posts: [] };
-  if (IG.profile) $('#ig-avatar').src = IG.profile;
+  if (IG.profile && $('#ig-avatar')) $('#ig-avatar').src = IG.profile;
   var track = $('#ig-track'), list = $('#ig-posts');
+  if (track && list) {
   (IG.posts || []).forEach(function (post, i) {
     var li = document.createElement('li');
     if (post.img) {
@@ -72,6 +73,18 @@
       track.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 220, behavior: reduce ? 'auto' : 'smooth' });
     }
   });
+  } // the posts strip comes back when there are enough posts (see js/projects.js)
+
+  // ---------- Click / tap effect ----------
+  if (!reduce) {
+    document.addEventListener('pointerdown', function (e) {
+      var t = document.createElement('span');
+      t.className = 'tap'; t.setAttribute('aria-hidden', 'true');
+      t.style.left = e.clientX + 'px'; t.style.top = e.clientY + 'px';
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 600);
+    }, { passive: true });
+  }
 
   // ---------- Gate: pointer / touch reveals what MAZE does ----------
   var rev = $('#reveal');
@@ -89,7 +102,10 @@
   // ---------- Contact ----------
   var hasWA = WHATSAPP_NUMBER !== '972500000000';
   var form = $('#cform'), note = $('#form-note'), svcs = $$('[data-svc]');
-  if (hasWA) { var fw = $('#f-wa'); fw.hidden = false; fw.href = 'https://wa.me/' + WHATSAPP_NUMBER; fw.target = '_blank'; fw.rel = 'noopener'; }
+  if (hasWA) {
+    var fw = $('#f-wa'); fw.hidden = false; fw.href = 'https://wa.me/' + WHATSAPP_NUMBER; fw.target = '_blank'; fw.rel = 'noopener';
+    var wf = $('#wa-float'); wf.hidden = false; wf.href = 'https://wa.me/' + WHATSAPP_NUMBER;
+  }
 
   svcs.forEach(function (b) {
     b.addEventListener('click', function () {
@@ -121,7 +137,7 @@
       say('נפתחה הודעת וואטסאפ עם הפרטים שלכם.', true);
     } else {
       location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('פנייה מהאתר') + '&body=' + encodeURIComponent(text);
-      say('נפתחה טיוטת מייל. אם לא נפתח כלום, כתבו ישירות ל־' + EMAIL, true);
+      say('אם לא נפתחה טיוטת מייל, כתבו ישירות ל־' + EMAIL + '. הפרטים שלכם עדיין בטופס.');
     }
   });
 })();

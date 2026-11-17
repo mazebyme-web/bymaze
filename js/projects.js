@@ -37,12 +37,6 @@ window.MAZE_PROJECTS = [
     deliverables: ['Rotating banner'],
     sections: [], images: [], client: null,
     notes: ['Add each banner frame as a separate image (3-6)']
-  },
-  {
-    id: 'soon', n: '04', type: 'D', cats: ['branding'], soon: true,
-    title: 'More projects coming soon', label: 'Branding · Experimental',
-    desc: '', deliverables: [], sections: [], images: [], client: null,
-    notes: ['Placeholder for two upcoming projects: one identity (type A), one experimental (type D)']
   }
 ];
 

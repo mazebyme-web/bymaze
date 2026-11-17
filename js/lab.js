@@ -1,4 +1,4 @@
-/* MAZE · lab: type playground + choose the better layout */
+/* MAZE · lab: type playground */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -40,51 +40,4 @@
   $('#type-reset').addEventListener('click', reset);
   draw();
 
-  // ---------- 02 · Clean it up ----------
-  // Each removed item lowers the "time to understand", from 9 seconds to 1.
-  var JUNK = [
-    ['j1', '!!!מבצע!!!'], ['j2', '★★★★★'], ['j3', 'STOCK PHOTO'], ['j4', 'הכי טעים בעיר!!!'],
-    ['j5', 'WiFi חינם!!!'], ['j6', '1+1 על המאפים*'], ['j7', 'חדש!'], ['j8', 'עקבו אחרינו בפייסבוק • אינסטגרם • טיקטוק']
-  ];
-  var flyer = $('#flyer'), num = $('#meter-num'), fill = $('#meter-fill'), cout = $('#clean-out');
-  var left = 0;
-
-  function meter() {
-    var secs = 1 + left;
-    num.textContent = secs + 's';
-    fill.style.width = (secs / 9 * 100) + '%';
-  }
-  function setupFlyer() {
-    Array.prototype.slice.call(flyer.querySelectorAll('.junk')).forEach(function (j) { j.remove(); });
-    flyer.classList.remove('clean');
-    cout.textContent = '';
-    JUNK.forEach(function (it) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'junk ' + it[0]; b.textContent = it[1];
-      b.setAttribute('aria-label', 'הסירו: ' + it[1]);
-      b.addEventListener('click', removeJunk);
-      flyer.appendChild(b);
-    });
-    left = JUNK.length; meter();
-  }
-  function removeJunk(e) {
-    var b = e.currentTarget;
-    if (b.classList.contains('gone')) return;
-    b.classList.add('gone'); b.disabled = true; b.tabIndex = -1;
-    left--; meter();
-    if (left === 0) { finish(); return; }
-    var nextJunk = flyer.querySelector('.junk:not(.gone)');
-    if (nextJunk && document.activeElement === b) nextJunk.focus();
-  }
-  function finish() {
-    flyer.classList.add('clean');
-    left = 0; meter();
-    Array.prototype.slice.call(flyer.querySelectorAll('.junk')).forEach(function (j) { j.classList.add('gone'); j.disabled = true; });
-    cout.textContent = 'מ־9 שניות לשנייה אחת. אותו עסק, אותו מידע, רק בלי הרעש. כמה זמן לוקח להבין את העסק שלכם? ';
-    var a = document.createElement('a'); a.href = '#contact'; a.className = 'clean-cta'; a.textContent = 'דברו איתי ←';
-    cout.appendChild(a);
-  }
-  $('#clean-skip').addEventListener('click', finish);
-  $('#clean-restart').addEventListener('click', function () { setupFlyer(); flyer.querySelector('.junk').focus(); });
-  setupFlyer();
 })();

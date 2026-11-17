@@ -90,6 +90,7 @@ img,svg{max-width:100%}
 .arch-head>div{display:flex;flex-direction:column;gap:.75rem}
 .filters{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;margin-inline:calc(var(--pad) * -1);padding-inline:var(--pad)}
 .filters::-webkit-scrollbar{display:none}
+.filters[hidden],#arch-count[hidden]{display:none}
 .filters button{flex:0 0 auto;font:600 .78rem var(--font);letter-spacing:.1em;color:var(--sand);background:none;border:1px solid var(--line);padding:.55rem .9rem;min-height:44px;cursor:pointer}
 .filters button:hover{border-color:var(--sand);color:var(--ink)}
 .filters button span{font-weight:400;letter-spacing:0;margin-inline-start:.35rem;opacity:.8}
@@ -132,6 +133,12 @@ img,svg{max-width:100%}
   .tA{grid-column:span 4}.tB{grid-column:span 2}.tC{grid-column:span 4}.tD{grid-column:span 2}
   .tB .meta{inset-inline:auto;inset-inline-start:0;margin:0;max-width:85%}}
 
+.cta-box{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:1rem;background:var(--ink);color:var(--bg);text-decoration:none;border:1px solid var(--ink);border-top:6px solid var(--accent);transition:background .25s}
+.cta-box .tech{color:var(--bg)}
+.cta-ttl{font-weight:900;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1;letter-spacing:-.02em}
+.cta-he{font-weight:600;text-align:right}
+.cta-box:hover,.cta-box:focus-visible{background:var(--sand);border-color:var(--sand);border-top-color:var(--accent)}
+
 /* ---- 8 · case file ---- */
 .case{position:fixed;inset:0;z-index:12;background:var(--bg);overflow:auto;overscroll-behavior:contain}
 .case[hidden]{display:none}
@@ -147,7 +154,7 @@ img,svg{max-width:100%}
 
 /* ---- 9 · lab ---- */
 .lab-grid{display:grid;gap:1.25rem;grid-template-columns:1fr;align-items:start}
-@media(min-width:1000px){.lab-grid{grid-template-columns:1fr 1fr}}
+
 .exp{border:1px solid var(--umber);padding:clamp(1rem,3vw,1.75rem);display:flex;flex-direction:column;gap:1rem;min-width:0}
 .exp h3{margin:0;font-weight:900;font-size:clamp(1.3rem,3vw,1.8rem);letter-spacing:-.01em}
 .type-stage{min-height:14rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;overflow:hidden;background:var(--navy);border:1px solid var(--umber);padding:1rem;line-height:.95;color:var(--ink);text-align:center}
@@ -193,6 +200,8 @@ img,svg{max-width:100%}
 .meet{display:grid;gap:2rem;grid-template-columns:1fr;grid-template-areas:"portrait" "txt";align-items:start}
 .about-txt{grid-area:txt;display:flex;flex-direction:column;gap:.75rem;align-items:flex-end}
 .about-txt .he{text-align:right}
+.about-txt .ig-profile{flex-direction:row-reverse;margin-top:.5rem}
+.about-txt .ig-avatar{--av:3.5rem}
 .portrait{grid-area:portrait;justify-self:end;width:100%;max-width:18rem;aspect-ratio:4/5;object-fit:cover;border:1px dashed var(--line);display:grid;place-items:center;font:600 .72rem var(--font);letter-spacing:.16em;color:var(--sand);background:var(--navy)}
 img.portrait{border:0;display:block}
 @media(min-width:800px){.meet{grid-template-columns:1fr 16rem;grid-template-areas:"txt portrait";gap:2.5rem;align-items:center}}
@@ -275,3 +284,21 @@ img.portrait{border:0;display:block}
   *{transition:none!important;animation:none!important}
 }
 .tD.soon .giant{display:none}
+
+/* ---- 14 · cursor & click feedback ---- */
+@media(pointer:fine){
+  *,*::before,*::after{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpolygon points='5,4 26,13 16.5,16.5 13,26' fill='%23B55D2F' stroke='%23F2EDE3' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E") 5 4,auto!important}
+  input:not([type=range]),textarea{cursor:text!important}
+}
+.tap{position:fixed;z-index:100;width:36px;height:36px;margin:-18px 0 0 -18px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;animation:tap .5s ease-out forwards}
+@keyframes tap{from{transform:scale(.3);opacity:1}to{transform:scale(1.5);opacity:0}}
+.btn,.svc button,.tile>button,.filters button,.ig-profile{transition:transform .12s,background .2s,color .2s,border-color .2s}
+.btn:active,.svc button:active,.filters button:active,.ig-profile:active{transform:scale(.96)}
+
+/* WhatsApp button fixed at the bottom on mobile (appears once a number is set) */
+.wa-float{display:none}
+@media(max-width:899px){
+  .wa-float:not([hidden]){position:fixed;z-index:9;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;min-height:48px;padding:0 1.2rem;
+    background:var(--ink);color:var(--bg);font:600 .9rem var(--font);letter-spacing:.06em;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+  .foot{padding-bottom:6rem}
+}
