@@ -116,15 +116,24 @@
       </div>
       <div class="row"><button type="button" class="btn solid" id="type-shuffle">SHUFFLE</button><button type="button" class="btn" id="type-reset">RESET</button></div>
     </article>
-    <article class="exp" aria-labelledby="h-pick">
+    <article class="exp" aria-labelledby="h-clean">
       <p class="tech">EXPERIMENT 02</p>
-      <h3 id="h-pick">CHOOSE THE BETTER LAYOUT</h3>
-      <p class="he" lang="he" dir="rtl">אותו תוכן בשתי גרסאות. איזו עובדת טוב יותר?</p>
+      <h3 id="h-clean">CLEAN IT UP.</h3>
+      <p class="he" lang="he" dir="rtl">פלאייר עמוס מדי. געו בכל מה שמיותר, ותראו מה קורה להבנה.</p>
       <p class="note">Demo only. The business is invented.</p>
-      <p class="tech" id="pick-step">ROUND 1 OF 3</p>
-      <div class="pick" id="pick" role="group" aria-label="Choose a layout"></div>
-      <p id="pick-out" class="he" lang="he" dir="rtl" role="status"></p>
-      <div class="row"><button type="button" class="btn solid" id="pick-next" hidden>NEXT</button><button type="button" class="btn" id="pick-restart">START OVER</button></div>
+      <div class="meter" aria-hidden="true">
+        <span class="tech">TIME TO UNDERSTAND</span>
+        <span class="meter-bar"><i id="meter-fill"></i></span>
+        <b id="meter-num">9s</b>
+      </div>
+      <div class="flyer" id="flyer" lang="he" dir="rtl">
+        <p class="ess ess-name">קפה לנה</p>
+        <p class="ess ess-what">קפה ומאפים טריים</p>
+        <span class="ess-line" aria-hidden="true"></span>
+        <p class="ess ess-info">הנביאים 8, תל אביב · 050-0000000</p>
+      </div>
+      <p id="clean-out" class="he" lang="he" dir="rtl" role="status"></p>
+      <div class="row"><button type="button" class="btn" id="clean-skip">SHOW THE CLEAN VERSION</button><button type="button" class="btn" id="clean-restart">START OVER</button></div>
     </article>
   </div>
   <nav class="next-room" aria-label="Continue">

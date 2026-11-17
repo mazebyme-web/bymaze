@@ -40,70 +40,51 @@
   $('#type-reset').addEventListener('click', reset);
   draw();
 
-  // ---------- 02 · Choose the better layout ----------
-  var ROUNDS = [
-    { bad: 'flat', why: 'היררכיה: כשהשם גדול ובולט, המבקר מבין תוך שנייה מה העסק. כשהכול באותו גודל, אין מאיפה להתחיל לקרוא.' },
-    { bad: 'mixed', why: 'יישור: כשכל הפרטים נשענים על אותו קו, העין זורמת בלי מאמץ. יישורים מעורבבים נראים מקריים, גם כשהתוכן זהה.' },
-    { bad: 'low', why: 'ניגודיות: טקסט בהיר על רקע כהה נקרא בקלות. טקסט בגוון קרוב לרקע מעייף את העין ופוגע בנגישות.' }
+  // ---------- 02 · Clean it up ----------
+  // Each removed item lowers the "time to understand", from 9 seconds to 1.
+  var JUNK = [
+    ['j1', '!!!מבצע!!!'], ['j2', '★★★★★'], ['j3', 'STOCK PHOTO'], ['j4', 'הכי טעים בעיר!!!'],
+    ['j5', 'WiFi חינם!!!'], ['j6', '1+1 על המאפים*'], ['j7', 'חדש!'], ['j8', 'עקבו אחרינו בפייסבוק • אינסטגרם • טיקטוק']
   ];
-  var pick = $('#pick'), out = $('#pick-out'), step = $('#pick-step'), next = $('#pick-next');
-  var round = 0, score = 0, answered = false;
+  var flyer = $('#flyer'), num = $('#meter-num'), fill = $('#meter-fill'), cout = $('#clean-out');
+  var left = 0;
 
-  function mini(kind) {
-    var m = document.createElement('div');
-    m.className = 'mini ' + kind; m.lang = 'he'; m.dir = 'rtl';
-    m.innerHTML = '<b>קרמיקה נועה</b><span>סדנאות וחוגים בחיפה</span><ul><li>הרצל 12, חיפה</li><li>050-0000000</li><li><bdi>@noa.ceramics</bdi></li></ul><u>להרשמה</u>';
-    return m;
+  function meter() {
+    var secs = 1 + left;
+    num.textContent = secs + 's';
+    fill.style.width = (secs / 9 * 100) + '%';
   }
-
-  function build() {
-    var r = ROUNDS[round], goodFirst = Math.random() < .5;
-    answered = false;
-    pick.textContent = ''; out.textContent = ''; next.hidden = true;
-    step.textContent = 'ROUND ' + (round + 1) + ' OF ' + ROUNDS.length;
-    ['A', 'B'].forEach(function (label, i) {
-      var good = (i === 0) === goodFirst;
+  function setupFlyer() {
+    Array.prototype.slice.call(flyer.querySelectorAll('.junk')).forEach(function (j) { j.remove(); });
+    flyer.classList.remove('clean');
+    cout.textContent = '';
+    JUNK.forEach(function (it) {
       var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.dataset.good = good ? '1' : '0';
-      b.setAttribute('aria-label', 'Layout ' + label);
-      var tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = label;
-      b.appendChild(tag); b.appendChild(mini(good ? 'good' : r.bad));
-      b.addEventListener('click', choose);
-      pick.appendChild(b);
+      b.type = 'button'; b.className = 'junk ' + it[0]; b.textContent = it[1];
+      b.setAttribute('aria-label', 'הסירו: ' + it[1]);
+      b.addEventListener('click', removeJunk);
+      flyer.appendChild(b);
     });
+    left = JUNK.length; meter();
   }
-
-  function choose(e) {
-    if (answered) return;
-    answered = true;
-    var b = e.currentTarget, right = b.dataset.good === '1';
-    if (right) score++;
-    Array.prototype.forEach.call(pick.children, function (x) {
-      x.disabled = true;
-      x.classList.add(x.dataset.good === '1' ? 'is-better' : 'is-worse');
-      if (x.dataset.good === '1') x.querySelector('.tag').textContent += ' ✓';
-    });
-    out.textContent = (right ? 'נכון. ' : 'הפעם הגרסה השנייה עובדת טוב יותר. ') + ROUNDS[round].why;
-    if (round < ROUNDS.length - 1) { next.textContent = 'NEXT'; next.hidden = false; next.focus(); }
-    else { end(); }
+  function removeJunk(e) {
+    var b = e.currentTarget;
+    if (b.classList.contains('gone')) return;
+    b.classList.add('gone'); b.disabled = true; b.tabIndex = -1;
+    left--; meter();
+    if (left === 0) { finish(); return; }
+    var nextJunk = flyer.querySelector('.junk:not(.gone)');
+    if (nextJunk && document.activeElement === b) nextJunk.focus();
   }
-
-  function end() {
-    step.textContent = 'DONE · ' + score + ' OF ' + ROUNDS.length;
-    var p = document.createElement('p'); p.className = 'he'; p.lang = 'he'; p.dir = 'rtl';
-    p.textContent = 'ככה בדיוק נראית חשיבה עיצובית: החלטות קטנות שמשנות את ההבנה. ';
-    var a = document.createElement('a'); a.href = '#contact'; a.textContent = 'רוצים את זה לעסק שלכם?';
-    p.appendChild(a);
-    out.after(p); p.className += ' pick-end';
+  function finish() {
+    flyer.classList.add('clean');
+    left = 0; meter();
+    Array.prototype.slice.call(flyer.querySelectorAll('.junk')).forEach(function (j) { j.classList.add('gone'); j.disabled = true; });
+    cout.textContent = 'מ־9 שניות לשנייה אחת. אותו עסק, אותו מידע, רק בלי הרעש. כמה זמן לוקח להבין את העסק שלכם? ';
+    var a = document.createElement('a'); a.href = '#contact'; a.className = 'clean-cta'; a.textContent = 'דברו איתי ←';
+    cout.appendChild(a);
   }
-
-  next.addEventListener('click', function () {
-    if (!answered || round >= ROUNDS.length - 1) return;
-    round++; build(); pick.firstChild.focus();
-  });
-  $('#pick-restart').addEventListener('click', function () {
-    var old = document.querySelector('.pick-end'); if (old) old.remove();
-    round = 0; score = 0; build();
-  });
-  build();
+  $('#clean-skip').addEventListener('click', finish);
+  $('#clean-restart').addEventListener('click', function () { setupFlyer(); flyer.querySelector('.junk').focus(); });
+  setupFlyer();
 })();
