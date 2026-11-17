@@ -28,32 +28,47 @@
     SECTIONS.forEach(function (id) { io.observe(document.getElementById(id)); });
   }
 
-  // ---------- Main headline: always exactly two lines, as large as fits ----------
-  var fit = $('.big.fit');
+  // ---------- Headlines: always exactly two lines ----------
+  // Headlines with class "fit" always keep their two lines, as large as fits (max 144px).
   function fitHeadline() {
-    var box = fit.parentNode.clientWidth;
-    fit.style.fontSize = '100px';
-    var w = Math.max.apply(null, $$('.ln', fit).map(function (l) { return l.offsetWidth; }));
-    fit.style.fontSize = Math.min(144, Math.floor(100 * box / w * 0.98)) + 'px';
+    $$('.big.fit').forEach(function (fit) {
+      var box = fit.parentNode.clientWidth;
+      fit.style.fontSize = '100px';
+      var w = Math.max.apply(null, $$('.ln', fit).map(function (l) { return l.offsetWidth; }));
+      fit.style.fontSize = Math.min(144, Math.floor(100 * box / w * 0.98)) + 'px';
+    });
   }
   fitHeadline();
   addEventListener('resize', fitHeadline);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeadline);
 
-  // ---------- Instagram preview ----------
-  var PROFILE = 'https://instagram.com/bymazedesign';
-  var ig = $('#insta-grid');
-  (window.MAZE_INSTAGRAM || []).forEach(function (post, i) {
-    var li = document.createElement('li'), a = document.createElement('a');
-    a.href = post.url || PROFILE; a.target = '_blank'; a.rel = 'noopener';
+  // ---------- Instagram strip ----------
+  var IG = window.MAZE_INSTAGRAM || { posts: [] };
+  if (IG.profile) $('#ig-avatar').src = IG.profile;
+  var track = $('#ig-track'), list = $('#ig-posts');
+  (IG.posts || []).forEach(function (post, i) {
+    var li = document.createElement('li');
     if (post.img) {
-      var im = document.createElement('img'); im.src = post.img; im.alt = post.alt || 'Instagram post'; im.loading = 'lazy'; a.appendChild(im);
-      a.setAttribute('aria-label', (post.alt || 'Instagram post') + ' - opens Instagram');
+      var im = document.createElement('img'); im.src = post.img; im.alt = post.alt || ''; im.loading = 'lazy'; im.draggable = false; li.appendChild(im);
     } else {
-      var ph = document.createElement('span'); ph.className = 'ig-ph'; ph.setAttribute('aria-hidden', 'true'); ph.textContent = String(i + 1).padStart(2, '0'); a.appendChild(ph);
-      a.setAttribute('aria-label', 'MAZE on Instagram');
+      var ph = document.createElement('span'); ph.className = 'ig-ph'; ph.setAttribute('aria-hidden', 'true'); ph.textContent = String(i + 1).padStart(2, '0'); li.appendChild(ph);
     }
-    li.appendChild(a); ig.appendChild(li);
+    list.appendChild(li);
+  });
+  // drag sideways with the mouse (touch screens scroll natively)
+  var drag = null;
+  track.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { x: e.clientX, left: track.scrollLeft };
+    track.setPointerCapture(e.pointerId); track.classList.add('dragging');
+  });
+  track.addEventListener('pointermove', function (e) { if (drag) track.scrollLeft = drag.left - (e.clientX - drag.x); });
+  ['pointerup', 'pointercancel'].forEach(function (ev) { track.addEventListener(ev, function () { drag = null; track.classList.remove('dragging'); }); });
+  track.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      track.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * 220, behavior: reduce ? 'auto' : 'smooth' });
+    }
   });
 
   // ---------- Gate: pointer / touch reveals what MAZE does ----------

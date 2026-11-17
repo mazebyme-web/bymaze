@@ -12,7 +12,8 @@
   --sand:#BAAD99;      /* secondary text (6.1:1 on bg) */
   --umber:#544B42;     /* lines, raised surfaces */
   --line:#6E6357;      /* control borders (3.1:1 on bg) */
-  --accent:#B55D2F;    /* decorative and large text only */
+  --accent:#B55D2F;    /* decorative only */
+  --accent-text:#BC6233; /* same orange, adjusted to pass 3:1 for large headlines */
   --navy:#203248;      /* alt surface */
   --font:"aktiv-grotesk",system-ui,sans-serif;
   --pad:clamp(1.25rem,5vw,4rem);
@@ -36,7 +37,8 @@ img,svg{max-width:100%}
 .big{font-weight:900;font-size:clamp(2.8rem,12.5vw,9rem);line-height:.92;letter-spacing:-.03em;margin:0}
 .big span{display:inline-block}
 .big .ln{display:block;width:max-content;max-width:none;white-space:nowrap}
-.big span:not(.ln):nth-child(even){color:var(--sand)}
+.big span:not(.ln):not(.hl):nth-child(even){color:var(--sand)}
+.big .hl{color:var(--accent-text)}
 .mid{font-weight:900;font-size:clamp(2rem,6vw,4rem);letter-spacing:-.02em;margin:0;line-height:1}
 .kicker{margin:0;color:var(--sand);font-weight:600;letter-spacing:.04em}
 .hint{color:var(--sand);margin:0;font-weight:300}
@@ -131,10 +133,6 @@ img,svg{max-width:100%}
   .tA{grid-column:span 4}.tB{grid-column:span 2}.tC{grid-column:span 4}.tD{grid-column:span 2}
   .tB .meta{inset-inline:auto;inset-inline-start:0;margin:0;max-width:85%}}
 
-/* section bottom navigation */
-.next-room{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--umber)}
-@media(max-width:600px){.next-room .btn:not(.quiet){flex:1 1 100%}}
-
 /* ---- 8 · case file ---- */
 .case{position:fixed;inset:0;z-index:12;background:var(--bg);overflow:auto;overscroll-behavior:contain}
 .case[hidden]{display:none}
@@ -193,22 +191,30 @@ img,svg{max-width:100%}
 
 /* ---- 10 · exit ---- */
 #contact{justify-content:flex-start;gap:2.5rem}
-.meet{display:grid;gap:2rem;grid-template-columns:1fr;grid-template-areas:"portrait" "txt" "insta";align-items:start}
-.insta{grid-area:insta;display:flex;flex-direction:column;gap:.9rem}
+.meet{display:grid;gap:2rem;grid-template-columns:1fr;grid-template-areas:"portrait" "txt";align-items:start}
 .about-txt{grid-area:txt;display:flex;flex-direction:column;gap:.75rem;align-items:flex-end}
 .about-txt .he{text-align:right}
 .portrait{grid-area:portrait;justify-self:end;width:100%;max-width:18rem;aspect-ratio:4/5;object-fit:cover;border:1px dashed var(--line);display:grid;place-items:center;font:600 .72rem var(--font);letter-spacing:.16em;color:var(--sand);background:var(--navy)}
 img.portrait{border:0;display:block}
-@media(min-width:900px){.meet{grid-template-columns:1.1fr 1fr 15rem;grid-template-areas:"insta txt portrait";gap:2.5rem}.about-txt{padding-top:1rem}}
-.insta-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
-.insta-handle{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:2px solid var(--accent)}
-.insta-handle:hover{color:var(--sand)}
-.insta-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
-.insta-grid a{position:relative;display:block;aspect-ratio:1;overflow:hidden;background:var(--navy);border:1px solid var(--umber)}
-.insta-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.insta-grid a:hover img,.insta-grid a:focus-visible img{transform:scale(1.05)}
-.insta-grid .ig-ph{position:absolute;inset:0;display:grid;place-items:center;font:900 1.6rem var(--font);color:var(--umber)}
-.insta .btn{align-self:flex-start}
+@media(min-width:800px){.meet{grid-template-columns:1fr 16rem;grid-template-areas:"txt portrait";gap:2.5rem;align-items:center}}
+
+/* Instagram strip: full width, one row, left to right */
+.ig-strip{display:flex;align-items:center;gap:clamp(1rem,2.5vw,2rem);margin-inline:calc(var(--pad) * -1);padding:1.25rem var(--pad);border-block:1px solid var(--umber);direction:ltr}
+.ig-profile{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink);font:600 .78rem var(--font);letter-spacing:.04em}
+.ig-avatar{display:block;width:clamp(4.5rem,9vw,6.5rem);aspect-ratio:1;border-radius:50%;padding:3px;background:var(--accent);
+  box-shadow:0 6px 16px rgba(0,0,0,.45);transition:transform .25s,box-shadow .25s}
+.ig-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;border:3px solid var(--bg)}
+.ig-profile:hover .ig-avatar,.ig-profile:focus-visible .ig-avatar{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 24px rgba(0,0,0,.55)}
+.ig-profile:hover .ig-name{color:var(--sand)}
+.ig-profile:focus-visible{outline-offset:6px}
+.ig-track{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;cursor:grab;touch-action:pan-x pan-y;-webkit-mask:linear-gradient(90deg,#000 85%,transparent);mask:linear-gradient(90deg,#000 85%,transparent)}
+.ig-track::-webkit-scrollbar{display:none}
+.ig-track.dragging{cursor:grabbing}
+.ig-track:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+.ig-posts{list-style:none;margin:0;padding:0;display:flex;gap:.4rem;width:max-content}
+.ig-posts li{flex:0 0 auto;width:clamp(6rem,11vw,8.5rem);aspect-ratio:1;background:var(--navy);overflow:hidden;user-select:none}
+.ig-posts img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
+.ig-posts .ig-ph{display:grid;place-items:center;width:100%;height:100%;font:900 1.4rem var(--font);color:var(--umber)}
 .process{display:flex;flex-direction:column;gap:1rem}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}
 .steps li{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--umber);text-align:right}

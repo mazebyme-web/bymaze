@@ -79,11 +79,6 @@
   </div>
   <ul id="grid" class="grid"></ul>
   <p id="arch-empty" class="note" hidden>Nothing here yet. <button type="button" class="lnk" data-f="all">Show all projects</button></p>
-  <nav class="next-room" aria-label="Continue">
-    <a class="btn solid" href="#lab">NEXT: THE LAB ↓</a>
-    <a class="btn" href="#contact">LET’S TALK</a>
-    <a class="btn quiet" href="#gate">BACK TO TOP ↑</a>
-  </nav>
 </section>
 
 <!-- CASE FILE (opens over the archive, address: #project-<id>) -->
@@ -136,29 +131,16 @@
       <div class="row"><button type="button" class="btn" id="clean-skip">SHOW THE CLEAN VERSION</button><button type="button" class="btn" id="clean-restart">START OVER</button></div>
     </article>
   </div>
-  <nav class="next-room" aria-label="Continue">
-    <a class="btn solid" href="#contact">NEXT: CONTACT ↓</a>
-    <a class="btn" href="#archive">↑ THE WORK</a>
-    <a class="btn quiet" href="#gate">BACK TO TOP ↑</a>
-  </nav>
 </section>
 
 <!-- 05 · THE EXIT -->
 <section id="contact" class="room" data-room="contact" aria-labelledby="h-contact">
   <div class="room-head">
     <p class="tech">N° 004 · THE EXIT</p>
-    <h2 id="h-contact" class="big">YOUR BUSINESS IS NEXT.</h2>
+    <h2 id="h-contact" class="big fit"><span class="ln">YOUR <span class="hl">BUSINESS</span></span> <span class="ln">IS NEXT.</span></h2>
   </div>
 
   <div class="meet">
-    <div class="insta">
-      <div class="insta-head">
-        <p class="tech" id="h-insta">INSTAGRAM</p>
-        <a class="insta-handle" href="https://instagram.com/bymazedesign" target="_blank" rel="noopener">@bymazedesign</a>
-      </div>
-      <ul class="insta-grid" id="insta-grid"></ul>
-      <a class="btn" href="https://instagram.com/bymazedesign" target="_blank" rel="noopener">FOLLOW ON INSTAGRAM ↗</a>
-    </div>
     <div class="about-txt">
       <p class="tech">ABOUT</p>
       <h3 class="he-h" lang="he" dir="rtl">מאחורי MAZE</h3>
@@ -166,6 +148,17 @@
     </div>
     <!-- Replace with your photo: <img class="portrait" src="assets/portrait.webp" alt="מזל טדסה, המעצבת מאחורי MAZE"> -->
     <div class="portrait" role="img" aria-label="Portrait - coming soon"><span>PORTRAIT</span></div>
+  </div>
+
+  <!-- Instagram strip: the round profile picture is the only link; posts can be dragged sideways -->
+  <div class="ig-strip">
+    <a class="ig-profile" href="https://instagram.com/bymazedesign" target="_blank" rel="noopener" aria-label="MAZE on Instagram, @bymazedesign (opens Instagram)">
+      <span class="ig-avatar"><img id="ig-avatar" src="assets/favicon.svg" alt="" width="96" height="96"></span>
+      <span class="ig-name">@bymazedesign ↗</span>
+    </a>
+    <div class="ig-track" id="ig-track" tabindex="0" role="region" aria-label="Recent Instagram posts. Drag, swipe or use the arrow keys to scroll.">
+      <ul class="ig-posts" id="ig-posts"></ul>
+    </div>
   </div>
 
   <div class="process">
@@ -201,11 +194,6 @@
       <p class="form-direct">או כתבו ישירות: <a href="mailto:mazebyme@gmail.com">mazebyme@gmail.com</a></p>
     </form>
   </div>
-  <nav class="next-room" aria-label="Continue">
-    <a class="btn" href="#archive">↑ THE WORK</a>
-    <a class="btn" href="#lab">↑ THE LAB</a>
-    <a class="btn quiet" href="#gate">BACK TO TOP ↑</a>
-  </nav>
 </section>
 </main>
 

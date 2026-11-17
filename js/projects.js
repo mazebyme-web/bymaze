@@ -46,15 +46,15 @@ window.MAZE_PROJECTS = [
   }
 ];
 
-/* Instagram preview in the contact section (6 tiles).
-   For each post: save the image in assets/instagram/ and paste the post link.
-   url: 'https://www.instagram.com/p/XXXXXXXX/'   img: 'assets/instagram/01.webp'   alt: 'what the post shows'
-   A tile without img shows a placeholder and opens your profile. */
-window.MAZE_INSTAGRAM = [
-  { url: '', img: '', alt: '' },
-  { url: '', img: '', alt: '' },
-  { url: '', img: '', alt: '' },
-  { url: '', img: '', alt: '' },
-  { url: '', img: '', alt: '' },
-  { url: '', img: '', alt: '' }
-];
+/* Instagram strip in the contact section.
+   profile: your Instagram profile picture, e.g. 'assets/instagram/profile.webp' (empty = MAZE icon).
+   posts:   images saved from your feed, in order, e.g. { img: 'assets/instagram/01.webp', alt: 'what the post shows' }.
+   Posts are a visual preview only; the round profile picture is the link to Instagram. */
+window.MAZE_INSTAGRAM = {
+  profile: '',
+  posts: [
+    { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' },
+    { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' },
+    { img: '', alt: '' }, { img: '', alt: '' }
+  ]
+};
