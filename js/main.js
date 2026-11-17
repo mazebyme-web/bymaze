@@ -55,10 +55,12 @@
     }
     list.appendChild(li);
   });
+  function canDrag() { track.classList.toggle('can-drag', track.scrollWidth > track.clientWidth + 2); }
+  canDrag(); addEventListener('resize', canDrag);
   // drag sideways with the mouse (touch screens scroll natively)
   var drag = null;
   track.addEventListener('pointerdown', function (e) {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    if (e.pointerType !== 'mouse' || e.button !== 0 || !track.classList.contains('can-drag')) return;
     drag = { x: e.clientX, left: track.scrollLeft };
     track.setPointerCapture(e.pointerId); track.classList.add('dragging');
   });

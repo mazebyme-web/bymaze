@@ -51,10 +51,12 @@ window.MAZE_PROJECTS = [
    posts:   images saved from your feed, in order, e.g. { img: 'assets/instagram/01.webp', alt: 'what the post shows' }.
    Posts are a visual preview only; the round profile picture is the link to Instagram. */
 window.MAZE_INSTAGRAM = {
-  profile: '',
+  profile: 'assets/instagram/profile.webp',
+  // The 4 posts currently on @bymazedesign, newest first. Add the image file names when the images are in assets/instagram/.
   posts: [
-    { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' },
-    { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' }, { img: '', alt: '' },
-    { img: '', alt: '' }, { img: '', alt: '' }
+    { img: '', alt: 'MAZE Instagram post, 7 September 2026' },
+    { img: '', alt: 'MAZE Instagram post, 6 September 2026' },
+    { img: '', alt: 'MAZE Instagram post, 30 August 2026' },
+    { img: '', alt: 'MAZE Instagram post, 25 August 2026' }
   ]
 };
