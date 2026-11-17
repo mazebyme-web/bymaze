@@ -1,4 +1,4 @@
-/* MAZE · main: rooms (router), gate reveal, navigation, mini-map, contact form */
+/* MAZE · main: section highlight, headline fit, gate reveal, Instagram preview, contact form */
 (function () {
   'use strict';
 
@@ -15,49 +15,46 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Rooms ----------
-  var ROOMS = ['gate', 'maze', 'archive', 'lab', 'contact'];
-  var DEPTH = { gate: 0, maze: 1, archive: 2, lab: 2, contact: 2 };
-  var TITLES = {
-    gate: 'MAZE - Graphic Design & Branding Studio | סטודיו לעיצוב ומיתוג',
-    maze: 'The Maze | MAZE',
-    archive: 'Archive - selected work | MAZE',
-    lab: 'Lab - design experiments | MAZE',
-    contact: 'Contact, services & about | MAZE'
-  };
-  var OLD = { entry: 'gate', paths: 'maze', fix: 'lab', work: 'archive', exit: 'contact' };
-  var current = null;
-
-  function parse() {
-    var parts = location.hash.replace(/^#\/?/, '').split('/');
-    var room = OLD[parts[0]] || parts[0] || 'gate';
-    if (ROOMS.indexOf(room) < 0) room = 'gate';
-    return { room: room, sub: parts[1] ? decodeURIComponent(parts[1]) : null };
+  // ---------- One page: highlight where the visitor is ----------
+  var SECTIONS = ['gate', 'archive', 'lab', 'contact'];
+  function mark(id) {
+    $$('[data-nav]').forEach(function (a) { if (a.dataset.nav === id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    $$('[data-map]').forEach(function (a) { if (a.dataset.map === id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) mark(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    SECTIONS.forEach(function (id) { io.observe(document.getElementById(id)); });
   }
 
-  function show(first) {
-    var r = parse();
-    if (r.room !== current) {
-      var dir = current === null ? '' : (DEPTH[r.room] >= DEPTH[current] ? 'go-fwd' : 'go-back');
-      ROOMS.forEach(function (id) {
-        var el = document.getElementById(id);
-        el.classList.remove('is-active', 'go-fwd', 'go-back');
-        if (id === r.room) { el.classList.add('is-active'); if (dir && !reduce) el.classList.add(dir); }
-      });
-      $$('[data-nav]').forEach(function (a) { a.toggleAttribute('aria-current', a.dataset.nav === r.room); if (a.hasAttribute('aria-current')) a.setAttribute('aria-current', 'page'); });
-      $$('[data-map]').forEach(function (a) { a.toggleAttribute('aria-current', a.dataset.map === r.room); if (a.hasAttribute('aria-current')) a.setAttribute('aria-current', 'location'); });
-      document.title = TITLES[r.room];
-      if (!first) {
-        window.scrollTo(0, 0);
-        var h = document.querySelector('#' + r.room + ' h1, #' + r.room + ' h2');
-        if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
-      }
-      current = r.room;
+  // ---------- Main headline: always exactly two lines, as large as fits ----------
+  var fit = $('.big.fit');
+  function fitHeadline() {
+    var box = fit.parentNode.clientWidth;
+    fit.style.fontSize = '100px';
+    var w = Math.max.apply(null, $$('.ln', fit).map(function (l) { return l.offsetWidth; }));
+    fit.style.fontSize = Math.min(144, Math.floor(100 * box / w * 0.98)) + 'px';
+  }
+  fitHeadline();
+  addEventListener('resize', fitHeadline);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeadline);
+
+  // ---------- Instagram preview ----------
+  var PROFILE = 'https://instagram.com/bymazedesign';
+  var ig = $('#insta-grid');
+  (window.MAZE_INSTAGRAM || []).forEach(function (post, i) {
+    var li = document.createElement('li'), a = document.createElement('a');
+    a.href = post.url || PROFILE; a.target = '_blank'; a.rel = 'noopener';
+    if (post.img) {
+      var im = document.createElement('img'); im.src = post.img; im.alt = post.alt || 'Instagram post'; im.loading = 'lazy'; a.appendChild(im);
+      a.setAttribute('aria-label', (post.alt || 'Instagram post') + ' - opens Instagram');
+    } else {
+      var ph = document.createElement('span'); ph.className = 'ig-ph'; ph.setAttribute('aria-hidden', 'true'); ph.textContent = String(i + 1).padStart(2, '0'); a.appendChild(ph);
+      a.setAttribute('aria-label', 'MAZE on Instagram');
     }
-    if (window.MAZE_ARCHIVE) window.MAZE_ARCHIVE.route(r.room === 'archive' ? r.sub : null);
-  }
-  addEventListener('hashchange', function () { show(false); });
-  show(true);
+    li.appendChild(a); ig.appendChild(li);
+  });
 
   // ---------- Gate: pointer / touch reveals what MAZE does ----------
   var rev = $('#reveal');

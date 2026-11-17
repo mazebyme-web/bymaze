@@ -47,7 +47,7 @@
     { bad: 'low', why: 'ניגודיות: טקסט בהיר על רקע כהה נקרא בקלות. טקסט בגוון קרוב לרקע מעייף את העין ופוגע בנגישות.' }
   ];
   var pick = $('#pick'), out = $('#pick-out'), step = $('#pick-step'), next = $('#pick-next');
-  var round = 0, score = 0;
+  var round = 0, score = 0, answered = false;
 
   function mini(kind) {
     var m = document.createElement('div');
@@ -58,6 +58,7 @@
 
   function build() {
     var r = ROUNDS[round], goodFirst = Math.random() < .5;
+    answered = false;
     pick.textContent = ''; out.textContent = ''; next.hidden = true;
     step.textContent = 'ROUND ' + (round + 1) + ' OF ' + ROUNDS.length;
     ['A', 'B'].forEach(function (label, i) {
@@ -73,6 +74,8 @@
   }
 
   function choose(e) {
+    if (answered) return;
+    answered = true;
     var b = e.currentTarget, right = b.dataset.good === '1';
     if (right) score++;
     Array.prototype.forEach.call(pick.children, function (x) {
@@ -89,12 +92,15 @@
     step.textContent = 'DONE · ' + score + ' OF ' + ROUNDS.length;
     var p = document.createElement('p'); p.className = 'he'; p.lang = 'he'; p.dir = 'rtl';
     p.textContent = 'ככה בדיוק נראית חשיבה עיצובית: החלטות קטנות שמשנות את ההבנה. ';
-    var a = document.createElement('a'); a.href = '#/contact'; a.textContent = 'רוצים את זה לעסק שלכם?';
+    var a = document.createElement('a'); a.href = '#contact'; a.textContent = 'רוצים את זה לעסק שלכם?';
     p.appendChild(a);
     out.after(p); p.className += ' pick-end';
   }
 
-  next.addEventListener('click', function () { round++; build(); pick.firstChild.focus(); });
+  next.addEventListener('click', function () {
+    if (!answered || round >= ROUNDS.length - 1) return;
+    round++; build(); pick.firstChild.focus();
+  });
   $('#pick-restart').addEventListener('click', function () {
     var old = document.querySelector('.pick-end'); if (old) old.remove();
     round = 0; score = 0; build();

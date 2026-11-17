@@ -1,6 +1,7 @@
 /* MAZE archive data.
    To add a project: copy one object, change the fields, put images in assets/projects/<id>/.
 
+   cats: any of 'branding', 'digital', 'print' (the archive filters)
    type  (layout of the tile):
      A  featured case (large)       B  single deliverable (tall)
      C  digital set (wide)          D  typographic / experimental
@@ -11,7 +12,7 @@
    notes:  internal reminders for you. Never shown on the site. */
 window.MAZE_PROJECTS = [
   {
-    id: 'law-firm', n: '01', type: 'A', cats: ['identity', 'digital'],
+    id: 'law-firm', n: '01', type: 'A', cats: ['branding', 'digital'],
     title: 'Law firm - full identity',
     label: 'Branding · Visual language · Website · Digital business card',
     desc: 'מיתוג מלא למשרד עורכת דין: לוגו, שפה גרפית, אתר וכרטיס ביקור דיגיטלי.',
@@ -38,9 +39,22 @@ window.MAZE_PROJECTS = [
     notes: ['Add each banner frame as a separate image (3-6)']
   },
   {
-    id: 'soon', n: '04', type: 'D', cats: ['identity', 'experimental'], soon: true,
-    title: 'More projects coming soon', label: 'Identity · Experimental',
+    id: 'soon', n: '04', type: 'D', cats: ['branding'], soon: true,
+    title: 'More projects coming soon', label: 'Branding · Experimental',
     desc: '', deliverables: [], sections: [], images: [], client: null,
     notes: ['Placeholder for two upcoming projects: one identity (type A), one experimental (type D)']
   }
+];
+
+/* Instagram preview in the contact section (6 tiles).
+   For each post: save the image in assets/instagram/ and paste the post link.
+   url: 'https://www.instagram.com/p/XXXXXXXX/'   img: 'assets/instagram/01.webp'   alt: 'what the post shows'
+   A tile without img shows a placeholder and opens your profile. */
+window.MAZE_INSTAGRAM = [
+  { url: '', img: '', alt: '' },
+  { url: '', img: '', alt: '' },
+  { url: '', img: '', alt: '' },
+  { url: '', img: '', alt: '' },
+  { url: '', img: '', alt: '' },
+  { url: '', img: '', alt: '' }
 ];

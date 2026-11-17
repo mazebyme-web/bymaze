@@ -1,4 +1,4 @@
-/* MAZE · archive: tiles, filters, case file (address: #/archive/<project id>) */
+/* MAZE · archive: tiles, filters, case file (address: #project-<id>) */
 (function () {
   'use strict';
   var P = window.MAZE_PROJECTS || [];
@@ -78,7 +78,7 @@
       body.appendChild(el('p', 'tech', 'DELIVERABLES'));
       var d = el('ul', 'dl'); p.deliverables.forEach(function (x) { d.appendChild(el('li', null, x)); }); body.appendChild(d);
     }
-    var cta = el('a', 'btn solid', 'YOUR TURN - LET’S TALK'); cta.href = '#/contact'; body.appendChild(cta);
+    var cta = el('a', 'btn solid', 'YOUR TURN - LET’S TALK'); cta.href = '#contact'; body.appendChild(cta);
   }
   function open(p) {
     render(p);
@@ -95,11 +95,11 @@
 
   grid.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-id]'); if (!b) return;
-    location.hash = '#/archive/' + encodeURIComponent(b.dataset.id);
+    location.hash = '#project-' + encodeURIComponent(b.dataset.id);
   });
   document.addEventListener('keydown', function (e) {
     if (overlay.hidden) return;
-    if (e.key === 'Escape') { location.hash = '#/archive'; }
+    if (e.key === 'Escape') { leave(); }
     if (e.key === 'Tab') {
       var f = $$('a,button', overlay), first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -107,13 +107,30 @@
     }
   });
 
-  // called by the router on every address change
-  window.MAZE_ARCHIVE = {
-    route: function (id) {
-      if (!id) { var wasOpen = !overlay.hidden; close(location.hash.indexOf('#/archive') === 0); if (wasOpen && location.hash.indexOf('#/archive') === 0) document.title = 'Archive - selected work | MAZE'; return; }
+  // close the case file and return to the archive without jumping
+  function leave() {
+    history.pushState(null, '', '#archive');
+    close(true);
+  }
+  $('.close', overlay).addEventListener('click', function (e) { e.preventDefault(); leave(); });
+
+  // open / close from the address (#project-<id>), also on back / forward
+  function sync() {
+    var m = location.hash.match(/^#project-(.+)$/);
+    if (m) {
+      var id = decodeURIComponent(m[1]);
       var p = P.filter(function (x) { return x.id === id && !x.soon; })[0];
-      if (!p) { location.replace('#/archive'); return; }
-      open(p);
+      if (p) { open(p); return; }
+      history.replaceState(null, '', '#archive');
     }
-  };
+    if (!overlay.hidden) {
+      close(false);
+      var target = location.hash && document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView();
+    }
+    document.title = 'MAZE - Graphic Design & Branding Studio | סטודיו לעיצוב ומיתוג';
+  }
+  addEventListener('hashchange', sync);
+  addEventListener('popstate', sync);
+  sync();
 })();

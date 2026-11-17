@@ -22,6 +22,7 @@
 /* ---- 2 · base ---- */
 *{box-sizing:border-box}
 html{scroll-padding-top:var(--bar)}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.55 var(--font);-webkit-text-size-adjust:100%}
 a{color:inherit}
 img,svg{max-width:100%}
@@ -34,7 +35,8 @@ img,svg{max-width:100%}
 .tech{margin:0;font:600 .72rem/1.3 var(--font);letter-spacing:.14em;color:var(--sand);text-transform:uppercase}
 .big{font-weight:900;font-size:clamp(2.8rem,12.5vw,9rem);line-height:.92;letter-spacing:-.03em;margin:0}
 .big span{display:inline-block}
-.big span:nth-child(even){color:var(--sand)}
+.big .ln{display:block;width:max-content;max-width:none;white-space:nowrap}
+.big span:not(.ln):nth-child(even){color:var(--sand)}
 .mid{font-weight:900;font-size:clamp(2rem,6vw,4rem);letter-spacing:-.02em;margin:0;line-height:1}
 .kicker{margin:0;color:var(--sand);font-weight:600;letter-spacing:.04em}
 .hint{color:var(--sand);margin:0;font-weight:300}
@@ -67,14 +69,12 @@ img,svg{max-width:100%}
 @media(min-width:700px){.bar img{width:96px}.bar nav{font-size:.875rem}}
 
 /* ---- 4 · rooms ---- */
-.room{min-height:calc(100svh - var(--bar));padding:3rem var(--pad) 4.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.5rem;border-bottom:1px solid var(--umber)}
-.js .room{display:none;border-bottom:0}
-.js .room.is-active{display:flex}
+.room{padding:4.5rem var(--pad) 4rem;display:flex;flex-direction:column;justify-content:center;gap:1.5rem;border-bottom:1px solid var(--umber)}
 .room-head{display:flex;flex-direction:column;gap:.75rem}
 .room > *{min-width:0}
 
 /* ---- 5 · gate ---- */
-#gate{gap:1.1rem}
+#gate{gap:1.1rem;min-height:calc(100svh - var(--bar))}
 .tech-row,.index-row{display:flex;justify-content:space-between;gap:.5rem 1rem;flex-wrap:wrap;margin:0;padding:.5rem 0;list-style:none;font:600 .7rem var(--font);letter-spacing:.16em;color:var(--sand);border-block:1px solid var(--umber)}
 .index-row{border-top:0;justify-content:flex-start;gap:1rem}
 .index-row li+li::before{content:"/";margin-inline-end:1rem;color:var(--umber)}
@@ -84,30 +84,6 @@ img,svg{max-width:100%}
   color:var(--bg);background:var(--accent);
   -webkit-mask:radial-gradient(circle var(--r) at var(--x) var(--y),#000 98%,transparent 100%);mask:radial-gradient(circle var(--r) at var(--x) var(--y),#000 98%,transparent 100%)}
 
-/* ---- 6 · the maze (desktop: the logo letters are the walls, the gaps are doors) ---- */
-.typemaze{display:flex;align-items:stretch;gap:clamp(.5rem,1.4vw,1.25rem);height:clamp(13rem,40vh,24rem);margin-block:1rem 2.5rem}
-.glyph{height:100%;min-width:0;fill:currentColor;color:var(--ink)}
-.g-m{flex:1.31 1 0}.g-a{flex:1.23 1 0;color:var(--sand)}.g-z{flex:.95 1 0}.g-e{flex:.99 1 0;color:var(--sand)}
-.door{position:relative;flex:0 0 clamp(64px,6.2vw,96px);display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:.8rem 0;
-  border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:background .25s,border-color .25s}
-.door-n{font:600 .72rem var(--font);letter-spacing:.14em;color:var(--sand)}
-.door-name{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:900;letter-spacing:.14em;font-size:clamp(.95rem,1.5vw,1.3rem)}
-.door-he{position:absolute;top:calc(100% + .7rem);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:1rem;color:var(--ink);opacity:0;transition:opacity .2s;pointer-events:none}
-.door:hover,.door:focus-visible{background:var(--navy);border-color:var(--accent)}
-.door:hover .door-he,.door:focus-visible .door-he{opacity:1}
-.door:focus-visible{outline-offset:4px}
-
-/* mobile: a corridor of doors, the letters become a small header */
-@media(max-width:760px){
-  .typemaze{display:grid;grid-template-columns:1.31fr 1.23fr .95fr .99fr;height:auto;gap:.6rem;margin-block:.5rem 0}
-  .glyph{grid-row:1;height:auto;width:100%;aspect-ratio:1.1}
-  .door{grid-column:1/-1;flex-direction:row;justify-content:flex-start;align-items:center;gap:1rem;padding:1.1rem 1.1rem;min-height:5rem;border-inline-start:3px solid var(--accent)}
-  .door::after{content:"→";margin-inline-start:auto;font-weight:600;color:var(--sand)}
-  .door-name{writing-mode:horizontal-tb;transform:none;font-size:1.35rem}
-  .door-he{position:static;transform:none;opacity:1;white-space:normal;font-size:.95rem;color:var(--sand);text-align:right}
-  .maze-hint{display:none}
-}
-
 /* ---- 7 · archive (layout approved - unchanged) ---- */
 .arch-head{flex-direction:row;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap}
 .arch-head>div{display:flex;flex-direction:column;gap:.75rem}
@@ -115,6 +91,7 @@ img,svg{max-width:100%}
 .filters::-webkit-scrollbar{display:none}
 .filters button{flex:0 0 auto;font:600 .78rem var(--font);letter-spacing:.1em;color:var(--sand);background:none;border:1px solid var(--line);padding:.55rem .9rem;min-height:44px;cursor:pointer}
 .filters button:hover{border-color:var(--sand);color:var(--ink)}
+.filters button span{font-weight:400;letter-spacing:0;margin-inline-start:.35rem;opacity:.8}
 .filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 
 .grid{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(8.5rem,38vw,12rem);grid-auto-flow:dense}
@@ -153,6 +130,10 @@ img,svg{max-width:100%}
 @media(min-width:960px){.grid{grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(9rem,14vw,13rem);gap:.6rem}
   .tA{grid-column:span 4}.tB{grid-column:span 2}.tC{grid-column:span 4}.tD{grid-column:span 2}
   .tB .meta{inset-inline:auto;inset-inline-start:0;margin:0;max-width:85%}}
+
+/* section bottom navigation */
+.next-room{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--umber)}
+@media(max-width:600px){.next-room .btn:not(.quiet){flex:1 1 100%}}
 
 /* ---- 8 · case file ---- */
 .case{position:fixed;inset:0;z-index:12;background:var(--bg);overflow:auto;overscroll-behavior:contain}
@@ -200,10 +181,22 @@ img,svg{max-width:100%}
 
 /* ---- 10 · exit ---- */
 #contact{justify-content:flex-start;gap:2.5rem}
-.about{display:grid;gap:1.5rem;grid-template-columns:1fr;align-items:center}
-.portrait{aspect-ratio:4/5;max-width:18rem;border:1px dashed var(--line);display:grid;place-items:center;font:600 .72rem var(--font);letter-spacing:.16em;color:var(--sand);background:var(--navy)}
-.about-txt{display:flex;flex-direction:column;gap:.75rem}
-@media(min-width:800px){.about{grid-template-columns:16rem 1fr;gap:3rem}}
+.meet{display:grid;gap:2rem;grid-template-columns:1fr;grid-template-areas:"portrait" "txt" "insta";align-items:start}
+.insta{grid-area:insta;display:flex;flex-direction:column;gap:.9rem}
+.about-txt{grid-area:txt;display:flex;flex-direction:column;gap:.75rem;align-items:flex-end}
+.about-txt .he{text-align:right}
+.portrait{grid-area:portrait;justify-self:end;width:100%;max-width:18rem;aspect-ratio:4/5;object-fit:cover;border:1px dashed var(--line);display:grid;place-items:center;font:600 .72rem var(--font);letter-spacing:.16em;color:var(--sand);background:var(--navy)}
+img.portrait{border:0;display:block}
+@media(min-width:900px){.meet{grid-template-columns:1.1fr 1fr 15rem;grid-template-areas:"insta txt portrait";gap:2.5rem}.about-txt{padding-top:1rem}}
+.insta-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.insta-handle{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:2px solid var(--accent)}
+.insta-handle:hover{color:var(--sand)}
+.insta-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.insta-grid a{position:relative;display:block;aspect-ratio:1;overflow:hidden;background:var(--navy);border:1px solid var(--umber)}
+.insta-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.insta-grid a:hover img,.insta-grid a:focus-visible img{transform:scale(1.05)}
+.insta-grid .ig-ph{position:absolute;inset:0;display:grid;place-items:center;font:900 1.6rem var(--font);color:var(--umber)}
+.insta .btn{align-self:flex-start}
 .process{display:flex;flex-direction:column;gap:1rem}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}
 .steps li{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--umber);text-align:right}
@@ -224,7 +217,8 @@ img,svg{max-width:100%}
 .svc button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .cform{display:flex;flex-direction:column;gap:.9rem;padding:1.5rem;border:1px solid var(--sand);background:var(--navy)}
 .cform label{display:flex;flex-direction:column;gap:.3rem;font-size:.95rem;color:var(--sand)}
-.cform input,.cform textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--sand);padding:.7rem;min-height:44px;border-radius:0}
+.c-grid>*{min-width:0}
+.cform input,.cform textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--sand);padding:.7rem;min-height:44px;border-radius:0}
 .cform .btn{align-self:stretch}
 .form-note{margin:0;color:var(--sand);font-size:.95rem}
 .form-note.ok{color:var(--ink)}
@@ -239,7 +233,7 @@ img,svg{max-width:100%}
   .minimap a:hover{color:var(--ink)}
   .minimap a[aria-current]{color:var(--ink)}
   .minimap a[aria-current]::before{background:var(--accent);border-color:var(--accent)}
-  .minimap>a::after{content:"→";margin-inline-start:.4rem;color:var(--line)}
+  .minimap>a:not(:last-child)::after{content:"→";margin-inline-start:.4rem;color:var(--line)}
   .mm-l{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .minimap:hover .mm-l,.minimap:focus-within .mm-l{position:static;width:auto;height:auto;clip-path:none}
   .mm-rooms{display:flex;flex-direction:column;gap:.1rem;border-inline-start:1px solid var(--umber);padding-inline-start:.35rem}
@@ -259,10 +253,6 @@ img,svg{max-width:100%}
 .doc p,.doc li{color:var(--sand)}
 
 /* ---- 13 · motion ---- */
-.room.go-fwd{animation:in-fwd .45s cubic-bezier(.2,.8,.2,1)}
-.room.go-back{animation:in-back .45s cubic-bezier(.2,.8,.2,1)}
-@keyframes in-fwd{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
-@keyframes in-back{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
