@@ -1,27 +1,46 @@
-/* MAZE archive data. To add a project: copy one object, change the fields, drop images in assets/projects/<id>/.
-   type: A featured case · B compact deliverable · C wide digital set · D typographic/experimental
-   images: [{src, alt}] - leave [] until real files exist (a labelled placeholder is shown).
-   client: only fill in when the client approved disclosure. */
+/* MAZE archive data.
+   To add a project: copy one object, change the fields, put images in assets/projects/<id>/.
+
+   type  (layout of the tile):
+     A  featured case (large)       B  single deliverable (tall)
+     C  digital set (wide)          D  typographic / experimental
+   soon:   true  -> shown as a "Coming soon" tile, not clickable
+   images: [{ src: 'assets/projects/<id>/01.webp', alt: 'what the image shows' }]
+   sections: [['האתגר', 'text'], ['הפתרון', 'text']]  -> shown inside the case file
+   client: fill in only after the client approved showing the name.
+   notes:  internal reminders for you. Never shown on the site. */
 window.MAZE_PROJECTS = [
-  { id: 'law-firm-identity', n: '01', type: 'A', cats: ['identity', 'digital'],
-    title: 'Law firm - identity & digital', client: null, label: 'Branding · Website · Digital business card',
-    desc: 'מיתוג ועיצוב דיגיטלי למשרד עורכת דין.',
-    deliverables: [], images: [], pending: true,
-    needs: ['Logo and identity boards', 'Typography and colour specification', 'Brand applications (mockups)', 'Digital business card and website screenshots', 'Client approval to show the name']
+  {
+    id: 'law-firm', n: '01', type: 'A', cats: ['identity', 'digital'],
+    title: 'Law firm - full identity',
+    label: 'Branding · Visual language · Website · Digital business card',
+    desc: 'מיתוג מלא למשרד עורכת דין: לוגו, שפה גרפית, אתר וכרטיס ביקור דיגיטלי.',
+    deliverables: ['Logo', 'Visual language', 'Website', 'Digital business card'],
+    sections: [], images: [], client: null,
+    notes: ['Add identity boards, website screenshots and the digital card', 'Ask the client before showing the name']
   },
-  { id: 'print-slot', n: '02', type: 'B', cats: ['print'],
-    title: 'Print deliverable', client: null, label: 'Slot reserved · e.g. a sticker or single graphic',
-    desc: 'כאן יוצג עיצוב אחד ממוקד.', deliverables: [], images: [], pending: true,
-    needs: ['One photo or mockup of the finished piece', 'What it is and where it was used']
+  {
+    id: 'door-sticker', n: '02', type: 'B', cats: ['print'],
+    title: 'Glass door sticker',
+    label: 'Print · Door graphic',
+    desc: 'מדבקה לדלת שקופה במשרד עורך דין.',
+    deliverables: ['Door sticker'],
+    sections: [], images: [], client: null,
+    notes: ['A real photo of the sticker on the door works better than a mockup']
   },
-  { id: 'digital-slot', n: '03', type: 'C', cats: ['digital'],
-    title: 'Digital banners', client: null, label: 'Slot reserved · set of banner variations',
-    desc: 'כאן תוצג סדרה של באנרים ונכסים דיגיטליים.', deliverables: [], images: [], pending: true,
-    needs: ['3–6 banner variations (PNG/WebP)', 'Sizes and where they ran', 'Optional: desktop and mobile versions']
+  {
+    id: 'law-banner', n: '03', type: 'C', cats: ['digital'],
+    title: 'Rotating banner',
+    label: 'Digital · Banner set',
+    desc: 'באנר מתחלף למשרד עורך דין.',
+    deliverables: ['Rotating banner'],
+    sections: [], images: [], client: null,
+    notes: ['Add each banner frame as a separate image (3-6)']
   },
-  { id: 'maze-type', n: '04', type: 'D', cats: ['experimental'],
-    title: 'Good design opens doors', client: null, label: 'MAZE own typographic study',
-    desc: 'ניסוי טיפוגרפי של MAZE עצמה, לא עבודה של לקוח.', deliverables: ['Typographic composition'], images: [], pending: false,
-    needs: []
+  {
+    id: 'soon', n: '04', type: 'D', cats: ['identity', 'experimental'], soon: true,
+    title: 'More projects coming soon', label: 'Identity · Experimental',
+    desc: '', deliverables: [], sections: [], images: [], client: null,
+    notes: ['Placeholder for two upcoming projects: one identity (type A), one experimental (type D)']
   }
 ];
